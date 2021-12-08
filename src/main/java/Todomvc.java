@@ -1,4 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.io.File;
 import java.time.Duration;
 
 public class Todomvc {
@@ -49,17 +51,29 @@ public class Todomvc {
 
     private void assertItemLeft(int expectedItemLeftResult) {
         WebElement item = driver.findElement(By.xpath("//footer/*/span | //footer/span"));
-        if (expectedItemLeftResult == 1) {
             String futureResult = String.format("$d item left", expectedItemLeftResult);
             ExpectedConditions.textToBePresentInElement(item, futureResult);
-        } else {
-            String futureResult = String.format("$d items left", expectedItemLeftResult);
-            ExpectedConditions.textToBePresentInElement(item, futureResult);
-        }
     }
 
+    public static void takeScreenshot(WebDriver webdriver,String fileWithPath) throws Exception{
+
+        //TODO:Convert web driver object to TakeScreenshot
+        TakesScreenshot scrShot =((TakesScreenshot)webdriver);
+
+        //TODO:Call getScreenshotAs method to create image file
+        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+
+        //TODO:Move image file to new destination
+        File DestFile=new File(fileWithPath);
+
+        //TODO:Copy file at destination
+        FileUtils.copyFile(SrcFile, DestFile);
+
+    }
+
+
     @Test
-    public void todoCaseTesting() throws InterruptedException {
+    public void todoCaseTesting() throws Exception {
 
         //TODO:Naviguer vers le site de TodoMVC
         driver.get("https://todomvc.com");
@@ -92,6 +106,8 @@ public class Todomvc {
         //TODO:Vérification du champs item left
         assertItemLeft(1);
         Thread.sleep(3000);
+
+        takeScreenshot(driver, "I:\\OneDrive - Ministere de l'Enseignement Superieur et de la Recherche Scientifique\\Desktop\\TP3 screenshot\\screenshot.png"); ;
     }
 
     @ParameterizedTest
@@ -99,7 +115,7 @@ public class Todomvc {
             "AngularJS",
             "Dojo",
             "React"})
-    public void todosCaseTesting(String platform) throws InterruptedException {
+    public void todosCaseTesting(String platform) throws Exception {
 
         //TODO:Naviguer vers le site de TodoMVC
         driver.get("https://todomvc.com");
@@ -132,6 +148,11 @@ public class Todomvc {
         //TODO:Vérification du champs item left
         assertItemLeft(1);
         Thread.sleep(2000);
+
+        //TODO:Take a screenshot at the end of the test scenario
+        takeScreenshot(driver, "I:\\OneDrive - Ministere de l'Enseignement Superieur et de la Recherche Scientifique\\Desktop\\TP3 screenshot\\screenshot "+platform+".png"); ;
+
+
     }
 
     @AfterEach
