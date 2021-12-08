@@ -31,15 +31,23 @@ public class Todomvc {
     }
 
     private void platformChoice(String platform) {
-        WebElement element = driver.findElement(By.linkText(platform));
-        element.click();
+        WebElement item = driver.findElement(By.linkText(platform));
+        item.click();
     }
     private void addTodo(String todo) {
-        WebElement element = driver.findElement(By.className("new-todo"));
-        element.sendKeys(todo);
-        element.sendKeys(Keys.RETURN);
+        WebElement item = driver.findElement(By.className("new-todo"));
+        item.sendKeys(todo);
+        item.sendKeys(Keys.RETURN);
     }
 
+    private void checkTodo() throws InterruptedException{
+        WebElement item1 = driver.findElement(By.cssSelector("li:nth-child(2) .toggle"));
+        item1.click();
+        Thread.sleep(2000);
+        WebElement item2 = driver.findElement(By.cssSelector("li:nth-child(3) .toggle"));
+        item2.click();
+        Thread.sleep(2000);
+    }
     @Test
     public void todoCaseTesting() throws InterruptedException {
 
@@ -62,6 +70,9 @@ public class Todomvc {
         Thread.sleep(2000);
         addTodo("Study SOLID principals");
         Thread.sleep(2000);
+
+        //TODO:Cocher des actions
+        checkTodo();
     }
 
 
