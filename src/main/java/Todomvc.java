@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.*;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 
@@ -48,6 +49,18 @@ public class Todomvc {
         item2.click();
         Thread.sleep(2000);
     }
+
+    private void assertItemLeft(int expectedItemLeftResult) {
+        WebElement item = driver.findElement(By.xpath("//footer/*/span | //footer/span"));
+        if(expectedItemLeftResult == 1 ) {
+            String futureResult = String.format("$d item left", expectedItemLeftResult);
+            ExpectedConditions.textToBePresentInElement(item, futureResult);
+        } else {
+            String futureResult = String.format("$d items left", expectedItemLeftResult);
+            ExpectedConditions.textToBePresentInElement(item, futureResult);
+        }
+    }
+
     @Test
     public void todoCaseTesting() throws InterruptedException {
 
@@ -73,6 +86,10 @@ public class Todomvc {
 
         //TODO:Cocher des actions
         checkTodo();
+
+        //TODO:Vérification du champs item left
+        assertItemLeft(1);
+
     }
 
 
