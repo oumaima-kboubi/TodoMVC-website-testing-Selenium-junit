@@ -134,9 +134,8 @@ public class Todomvc {
         Thread.sleep(2000);
     }
 
-
     @AfterEach
-    public void quitDriver(){
+    public void quitDriver() {
         driver.quit();
     }
 }
