@@ -1,6 +1,6 @@
 # TodoMVC website testing
 
-This is a simple test of the site https://todomvc.com/
+This is a simple test of the website https://todomvc.com/ using selenium and junit
 
 # Test steps
 
